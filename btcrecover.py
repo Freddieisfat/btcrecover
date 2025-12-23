@@ -27,27 +27,29 @@
 
 from __future__ import print_function
 
-import os
 import sys
 import multiprocessing
-sys.path.insert(0, os.path.dirname(__file__))
 import btcrpass
 
 if __name__ == "__main__":
 
-    print("Starting - btcrecover.py:38", btcrpass.full_version(),
-          file=sys.stderr if any(a.startswith("--listp") for a in sys.argv[1:]) else sys.stdout)  # --listpass
+    print("Starting - btcrecover.py:36", btcrpass.full_version(), file=sys.stderr
+          if any(a.startswith("--listp") for a in sys.argv[1:]) else sys.stdout)
     btcrpass.parse_arguments(sys.argv[1:])
     (password_found, not_found_msg) = btcrpass.main()
 
-    if isinstance(password_found, basestring):
-        btcrpass.safe_print("Password found: ' - btcrecover.py:44" + password_found + "'")
+    if isinstance(password_found, str):
+        btcrpass.safe_print("Password found: ' - btcrecover.py:42" +
+                            password_found + "'")
+        btcrpass.safe_print("Password found: ' - btcrecover.py:44" +
+                            password_found + "'")
         if any(ord(c) < 32 or ord(c) > 126 for c in password_found):
-            print("HTML encoded:   ' - btcrecover.py:46" + password_found.encode("ascii", "xmlcharrefreplace") + "'")
-        retval = 0
+            print("HTML encoded:   '  .py:46 - btcrecover.py:47" +
+                  password_found.encode("ascii", "xmlcharrefreplace") + "'")
 
     elif not_found_msg:
-        print(not_found_msg, file=sys.stderr if btcrpass.args.listpass else sys.stdout)
+        print(not_found_msg, file=sys.stderr
+              if btcrpass.args.listpass else sys.stdout)
         retval = 0
 
     else:
@@ -58,3 +60,4 @@ if __name__ == "__main__":
         process.join(1.0)
 
     sys.exit(retval)
+
