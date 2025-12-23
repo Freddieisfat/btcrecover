@@ -27,20 +27,23 @@
 
 from __future__ import print_function
 
-from btcrecover import btcrpass
-import sys, multiprocessing
+import os
+import sys
+import multiprocessing
+sys.path.insert(0, os.path.dirname(__file__))
+import btcrpass
 
 if __name__ == "__main__":
 
-    print("Starting", btcrpass.full_version(),
+    print("Starting - btcrecover.py:38", btcrpass.full_version(),
           file=sys.stderr if any(a.startswith("--listp") for a in sys.argv[1:]) else sys.stdout)  # --listpass
     btcrpass.parse_arguments(sys.argv[1:])
     (password_found, not_found_msg) = btcrpass.main()
 
     if isinstance(password_found, basestring):
-        btcrpass.safe_print("Password found: '" + password_found + "'")
+        btcrpass.safe_print("Password found: ' - btcrecover.py:44" + password_found + "'")
         if any(ord(c) < 32 or ord(c) > 126 for c in password_found):
-            print("HTML encoded:   '" + password_found.encode("ascii", "xmlcharrefreplace") + "'")
+            print("HTML encoded:   ' - btcrecover.py:46" + password_found.encode("ascii", "xmlcharrefreplace") + "'")
         retval = 0
 
     elif not_found_msg:
